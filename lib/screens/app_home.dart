@@ -9,7 +9,7 @@ class AppHome extends StatefulWidget {
 }
 
 class _AppHomeState extends State<AppHome> {
-  double debtAmount = 0;
+  double debtAmount = 9000.00;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +50,9 @@ class _AppHomeState extends State<AppHome> {
                   ),
                 ),
                 AppFunction(onPressed: () {}, label: 'Add NEW Loan'),
+                AppFunction(onPressed: () {}, label: 'Remove Loan'),
+                AppFunction(onPressed: () {}, label: 'View Ledger'),
+                AppFunction(onPressed: () {}, label: 'Exit'),
               ],
             ),
           ),

@@ -15,9 +15,13 @@ class AppFunction extends StatelessWidget {
         width: double.infinity,
         child: ElevatedButton.icon(
           onPressed: onPressed,
-          label: Text(label, style: TextStyle(fontSize: 15)),
+          label: Text(
+            label,
+            style: TextStyle(fontSize: 15, color: Colors.white),
+          ),
           style: ElevatedButton.styleFrom(
-            minimumSize: Size(double.infinity, 50),
+            backgroundColor: const Color.fromARGB(255, 4, 83, 148),
+            minimumSize: Size(double.infinity, 75),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
