@@ -1,8 +1,8 @@
 class NewTransaction {
   final String name;
-  List<Transaction> transaction = [];
+  List<Transaction> transactions = [];
 
-  NewTransaction(this.name, this.transaction);
+  NewTransaction(this.name, this.transactions);
 }
 
 class Transaction {

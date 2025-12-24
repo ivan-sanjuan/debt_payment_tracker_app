@@ -1,4 +1,6 @@
 import 'package:debt_payment_tracker_app/models/app_functions.dart';
+import 'package:debt_payment_tracker_app/models/navigator_class.dart';
+import 'package:debt_payment_tracker_app/screens/second_screen.dart';
 import 'package:flutter/material.dart';
 
 class AppHome extends StatefulWidget {
@@ -49,7 +51,12 @@ class _AppHomeState extends State<AppHome> {
                     color: Color.fromARGB(255, 0, 131, 55),
                   ),
                 ),
-                AppFunction(onPressed: () {}, label: 'Add NEW Loan'),
+                AppFunction(
+                  onPressed: () {
+                    NavClass(SecondScreen()).navPush(context);
+                  },
+                  label: 'Add NEW Loan',
+                ),
                 AppFunction(onPressed: () {}, label: 'Remove Loan'),
                 AppFunction(onPressed: () {}, label: 'View Ledger'),
                 AppFunction(onPressed: () {}, label: 'Exit'),
