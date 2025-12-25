@@ -12,6 +12,6 @@ class DebtPaymentApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const AppHome();
+    return AppHome();
   }
 }

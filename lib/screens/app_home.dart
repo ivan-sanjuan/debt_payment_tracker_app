@@ -1,7 +1,6 @@
 import 'package:debt_payment_tracker_app/constants/colors.dart';
-import 'package:debt_payment_tracker_app/models/app_functions.dart';
-import 'package:debt_payment_tracker_app/models/navigator_class.dart';
-import 'package:debt_payment_tracker_app/screens/second_screen.dart';
+import 'package:debt_payment_tracker_app/models/buttons.dart';
+import 'package:debt_payment_tracker_app/screens/add_record.dart';
 import 'package:flutter/material.dart';
 
 class AppHome extends StatefulWidget {
@@ -12,58 +11,40 @@ class AppHome extends StatefulWidget {
 }
 
 class _AppHomeState extends State<AppHome> {
-  double debtAmount = 9000.00;
+  double total = 10000;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColor.primary,
-          title: Text(
-            'Debt Payment Tracker',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColor.primary,
+        title: Text(
+          'Lending Payment Tracker',
+          style: TextStyle(color: Colors.white),
         ),
-        body: Center(
-          child: Container(
-            padding: EdgeInsets.only(top: 30),
-            width: 350,
-            child: Column(
-              children: [
-                Text(
-                  'DEBT TO COLLECT:',
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.primary,
-                  ),
-                ),
-                Text(
-                  '$debtAmount',
-                  style: TextStyle(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: AppColor.secondaryDark,
-                  ),
-                ),
-                AppFunction(
-                  onPressed: () {
-                    NavClass(AddLoan()).navPush(context);
-                  },
-                  label: 'Add NEW Loan',
-                ),
-                AppFunction(onPressed: () {}, label: 'Remove Loan'),
-                AppFunction(onPressed: () {}, label: 'View Ledger'),
-                AppFunction(onPressed: () {}, label: 'Exit'),
-              ],
+      ),
+      body: Container(
+        padding: EdgeInsets.only(top: 20),
+        margin: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+              'TOTAL MONEY LENT:',
+              style: TextStyle(
+                color: AppColor.secondary,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
-          ),
+            Text(
+              '₱ $total',
+              style: TextStyle(fontSize: 50, color: AppColor.primary),
+            ),
+            AppButtons(screen: AddRecord(), label: 'Add NEW Borrower'),
+            AppButtons(screen: AddRecord(), label: 'Borrower Accounts'),
+            AppButtons(screen: AddRecord(), label: 'Recent Transactions'),
+            AppButtons(screen: AddRecord(), label: 'Exit'),
+          ],
         ),
       ),
     );

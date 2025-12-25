@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 
 class TextfieldClass extends StatelessWidget {
+  final String fieldName;
   final TextEditingController ctrl;
-  final Widget labelText;
-  final bool focus;
+  final IconData? iconfield;
 
-  const TextfieldClass(
-    this.ctrl,
-    this.labelText, {
-    this.focus = false,
-    super.key,
-  });
+  const TextfieldClass(this.fieldName, this.ctrl, {this.iconfield, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(top: 20),
       child: TextField(
         controller: ctrl,
-        autofocus: focus,
         decoration: InputDecoration(
-          label: labelText,
           border: OutlineInputBorder(),
+          label: Text(fieldName),
+          suffixIcon: Icon(iconfield),
         ),
       ),
     );
