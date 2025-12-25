@@ -18,6 +18,7 @@ class _AppHomeState extends State<AppHome> {
     return Center(
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue[800],
           title: Text(
             'Debt Payment Tracker',
             style: TextStyle(
@@ -26,7 +27,6 @@ class _AppHomeState extends State<AppHome> {
               color: Colors.white,
             ),
           ),
-          backgroundColor: Colors.blue[800],
         ),
         body: Center(
           child: Container(
@@ -53,7 +53,7 @@ class _AppHomeState extends State<AppHome> {
                 ),
                 AppFunction(
                   onPressed: () {
-                    NavClass(SecondScreen()).navPush(context);
+                    NavClass(AddLoan()).navPush(context);
                   },
                   label: 'Add NEW Loan',
                 ),

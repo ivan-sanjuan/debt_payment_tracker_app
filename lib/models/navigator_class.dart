@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class NavClass {
-  Widget nav;
+  final Widget page;
 
-  NavClass(this.nav);
+  NavClass(this.page);
 
   void navPush(BuildContext context) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => nav));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => page));
   }
 }
