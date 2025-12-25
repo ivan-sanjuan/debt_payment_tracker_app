@@ -6,7 +6,7 @@ class BorrowerAccounts {
   final DateTime date;
   final String name;
   final double amount;
-  final TransactionType transactionType;
+  final TransactionType? transactionType;
 
   const BorrowerAccounts(
     this.date,

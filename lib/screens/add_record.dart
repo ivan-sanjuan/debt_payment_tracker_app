@@ -1,4 +1,5 @@
 import 'package:debt_payment_tracker_app/constants/colors.dart';
+import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/buttons.dart';
 import 'package:debt_payment_tracker_app/models/date_picker.dart';
 import 'package:debt_payment_tracker_app/models/textfield_class.dart';
@@ -18,8 +19,16 @@ class _AddRecordState extends State<AddRecord> {
   final DatePicker datePicker = DatePicker();
   List<BorrowerAccounts> borrowerAccount = [];
 
-  addRecord(TextEditingController record) {
-    borrowerAccount.add(record);
+  addRecord() {
+    final borrower = BorrowerAccounts(
+      datePicker.selectedDate,
+      nameCtrl.text,
+      double.tryParse(amtCtrl.text) ?? 0.0,
+      TransactionType.addBorrower,
+    );
+    setState(() {
+      borrowerAccount.add(borrower);
+    });
   }
 
   @override
