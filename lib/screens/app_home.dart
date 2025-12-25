@@ -1,3 +1,4 @@
+import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/models/app_functions.dart';
 import 'package:debt_payment_tracker_app/models/navigator_class.dart';
 import 'package:debt_payment_tracker_app/screens/second_screen.dart';
@@ -18,7 +19,7 @@ class _AppHomeState extends State<AppHome> {
     return Center(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue[800],
+          backgroundColor: AppColor.primary,
           title: Text(
             'Debt Payment Tracker',
             style: TextStyle(
@@ -30,17 +31,17 @@ class _AppHomeState extends State<AppHome> {
         ),
         body: Center(
           child: Container(
-            padding: EdgeInsets.only(top: 20),
-            width: 380,
+            padding: EdgeInsets.only(top: 30),
+            width: 350,
             child: Column(
               children: [
                 Text(
-                  'Debt to Collect:',
+                  'DEBT TO COLLECT:',
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    color: AppColor.primary,
                   ),
                 ),
                 Text(
@@ -48,7 +49,7 @@ class _AppHomeState extends State<AppHome> {
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 131, 55),
+                    color: AppColor.secondaryDark,
                   ),
                 ),
                 AppFunction(

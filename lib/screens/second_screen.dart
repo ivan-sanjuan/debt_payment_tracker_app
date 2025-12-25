@@ -1,3 +1,4 @@
+import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/models/textfield_class.dart';
 import 'package:flutter/material.dart';
 
@@ -16,15 +17,18 @@ class _AddLoanState extends State<AddLoan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[800],
-        title: Text('Second Screen'),
+        backgroundColor: AppColor.primary,
+        title: Text(
+          'Add Loan',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Container(
         margin: EdgeInsets.only(top: 20),
         padding: EdgeInsets.all(20),
         child: Column(
           children: [
-            TextfieldClass(nameCtrl, Text('Name'), focus: true),
+            TextfieldClass(nameCtrl, Text('Name')),
             TextfieldClass(amtCtrl, Text('Amount')),
             TextfieldClass(nameCtrl, Text('Date')),
             TextfieldClass(nameCtrl, Text('Remarks')),

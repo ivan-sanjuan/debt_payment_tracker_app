@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:debt_payment_tracker_app/constants/colors.dart';
 
 @immutable
 class AppFunction extends StatelessWidget {
@@ -17,13 +18,13 @@ class AppFunction extends StatelessWidget {
           onPressed: onPressed,
           label: Text(
             label,
-            style: TextStyle(fontSize: 15, color: Colors.white),
+            style: TextStyle(fontSize: 20, color: Colors.white),
           ),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color.fromARGB(255, 4, 83, 148),
+            backgroundColor: AppColor.primaryDark,
             minimumSize: Size(double.infinity, 60),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(10),
             ),
           ),
         ),
