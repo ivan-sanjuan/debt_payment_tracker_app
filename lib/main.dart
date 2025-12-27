@@ -3,12 +3,12 @@ import 'package:debt_payment_tracker_app/screens/app_home.dart';
 
 void main() {
   runApp(
-    MaterialApp(home: DebtPaymentApp(), debugShowCheckedModeBanner: false),
+    MaterialApp(home: LendingTrackerApp(), debugShowCheckedModeBanner: false),
   );
 }
 
-class DebtPaymentApp extends StatelessWidget {
-  const DebtPaymentApp({super.key});
+class LendingTrackerApp extends StatelessWidget {
+  const LendingTrackerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
