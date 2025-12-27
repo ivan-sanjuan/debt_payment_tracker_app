@@ -13,6 +13,7 @@ class AppHome extends StatefulWidget {
 
 class _AppHomeState extends State<AppHome> {
   double total = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,22 +47,11 @@ class _AppHomeState extends State<AppHome> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                AppButton(
-                  AddRecord(),
-                  'Add New Record',
-                  TransactionType.addRecord,
+                AppButton.navigateTo(
+                  NewTransaction(),
+                  'New Transaction',
+                  TransactionType.newTransaction,
                 ),
-                AppButton(
-                  AddRecord(),
-                  'View Lendees',
-                  TransactionType.viewBalance,
-                ),
-                AppButton(
-                  AddRecord(),
-                  'View All Transactions',
-                  TransactionType.addTransaction,
-                ),
-                AppButton(AddRecord(), 'Exit', TransactionType.exit),
               ],
             ),
           ),

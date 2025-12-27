@@ -2,11 +2,18 @@ import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
-  final Widget? screen;
+  final Function? onPressed;
+  final Widget? navigateTo;
   final String label;
-  final TransactionType transactionType;
+  final TransactionType? transactionType;
 
-  const AppButton(this.screen, this.label, this.transactionType, {super.key});
+  const AppButton.invoke(this.onPressed, this.label, [this.transactionType])
+    : navigateTo = null;
+  const AppButton.navigateTo(
+    this.navigateTo,
+    this.label, [
+    this.transactionType,
+  ]) : onPressed = null;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +23,14 @@ class AppButton extends StatelessWidget {
       height: 80,
       child: ElevatedButton(
         onPressed: () {
-          Navigator.of(
-            context,
-          ).push(MaterialPageRoute(builder: (_) => screen!));
+          if (onPressed != null) {
+            onPressed!();
+          } else if (navigateTo != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => navigateTo!),
+            );
+          }
         },
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(

@@ -1,1 +1,7 @@
-enum TransactionType { addRecord, viewBalance, addTransaction, exit }
+enum TransactionType {
+  newTransaction,
+  addBorrower,
+  viewTransactions,
+  viewBorrowerAccounts,
+  exit,
+}
