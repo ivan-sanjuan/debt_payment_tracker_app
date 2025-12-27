@@ -1,10 +1,23 @@
 import 'package:debt_payment_tracker_app/models/transaction.dart';
+import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 
-class Borrower {
-  final String name;
-  final double totalLoan;
-  final DateTime acctCreationDate;
-  final List<Transaction> transactions = [];
+class BorrowerAccount {
+  String name;
+  List<Transaction> transactions = [];
 
-  Borrower(this.name, this.totalLoan, this.acctCreationDate);
+  BorrowerAccount(this.name);
+
+  double createTransaction(Transaction transaction) {
+    transactions.add(transaction);
+    return getBalance();
+  }
+
+  double getBalance() {
+    return transactions.fold(
+      0,
+      (sum, n) =>
+          sum +
+          (n.transactionType == TransactionType.payLoan ? -n.amount : n.amount),
+    );
+  }
 }

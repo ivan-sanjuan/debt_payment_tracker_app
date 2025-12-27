@@ -30,7 +30,6 @@ class _AddRecordState extends State<NewTransaction> {
       amount,
     );
     borrowerAcct.transactions.map((x) => x.toJson()).toList();
-    print();
   }
 
   @override

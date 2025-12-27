@@ -1,7 +1,1 @@
-enum TransactionType {
-  newTransaction,
-  addBorrower,
-  viewTransactions,
-  viewBorrowerAccounts,
-  exit,
-}
+enum TransactionType { addLoan, payLoan }

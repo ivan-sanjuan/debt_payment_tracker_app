@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:debt_payment_tracker_app/screens/app_home.dart';
+import 'package:flutter/material.dart';
 
 void main() {
   runApp(
