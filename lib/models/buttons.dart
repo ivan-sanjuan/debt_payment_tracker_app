@@ -29,9 +29,6 @@ class AppButton extends StatelessWidget {
             },
         },
         style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           elevation: 1,
         ),

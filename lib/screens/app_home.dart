@@ -38,10 +38,7 @@ class _AppHomeState extends State<AppHome> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text(
-                '$total',
-                style: TextStyle(fontSize: 70, color: AppColor.primary),
-              ),
+              Text('$total', style: TextStyle(fontSize: 70)),
               AppButton.navigate('Record NEW Transaction', AddBorrower()),
               AppButton.navigate('Add Borrower Account', AddBorrower()),
             ],
