@@ -1,43 +1,41 @@
-import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
+  final String text;
   final Function? onPressed;
-  final Widget? navigateTo;
-  final String label;
-  final TransactionType? transactionType;
+  final Widget? screen;
 
-  const AppButton.invoke(this.onPressed, this.label, [this.transactionType])
-    : navigateTo = null;
-  const AppButton.navigateTo(
-    this.navigateTo,
-    this.label, [
-    this.transactionType,
-  ]) : onPressed = null;
+  const AppButton.invoke(this.text, this.onPressed, {super.key})
+    : screen = null;
+  const AppButton.navigate(this.text, this.screen, {super.key})
+    : onPressed = null;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 15),
+      padding: EdgeInsets.only(top: 20),
       width: double.infinity,
-      height: 80,
+      height: 100,
       child: ElevatedButton(
-        onPressed: () {
-          if (onPressed != null) {
-            onPressed!();
-          } else if (navigateTo != null) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => navigateTo!),
-            );
-          }
+        onPressed: () => {
+          if (onPressed != null)
+            {onPressed!()}
+          else if (screen != null)
+            {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => screen!),
+              ),
+            },
         },
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+          elevation: 1,
         ),
-        child: Text(label, style: TextStyle(fontSize: 20)),
+        child: Text(text, style: TextStyle(fontSize: 18)),
       ),
     );
   }
