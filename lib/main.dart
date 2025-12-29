@@ -1,4 +1,5 @@
 import 'package:debt_payment_tracker_app/constants/colors.dart';
+import 'package:debt_payment_tracker_app/models/accounts.dart';
 import 'package:debt_payment_tracker_app/screens/app_home.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,10 @@ void main() {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             ),
           ),
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: AppColor.primary,
+          titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
         ),
       ),
     ),

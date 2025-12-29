@@ -2,10 +2,10 @@ import 'package:debt_payment_tracker_app/models/transaction.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 
 class BorrowerAccount {
-  String name;
+  String? name;
   List<Transaction> transactions = [];
 
-  BorrowerAccount(this.name);
+  BorrowerAccount([this.name]);
 
   double createTransaction(Transaction transaction) {
     transactions.add(transaction);
