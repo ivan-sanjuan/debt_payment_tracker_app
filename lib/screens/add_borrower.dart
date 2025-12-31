@@ -15,33 +15,21 @@ class AddBorrower extends StatefulWidget {
 class _AddBorrowerState extends State<AddBorrower> {
   final TextEditingController userCtrl = TextEditingController();
   final TextEditingController amtCtrl = TextEditingController();
-
   BorrowerAccount? borrower;
-  Ledger? ledger;
-  TransactionType? txtype;
-
-  void createBorrowerAcct(String createdUser, double declaredAmt) {
-    borrower = BorrowerAccount(createdUser);
-    ledger = Ledger(borrower!, TransactionType.addLoan);
-    var transaction = Transaction(
-      TransactionType.addLoan,
-      declaredAmt,
-      DateTime.now(),
-    );
-    borrower!.transactions.add(transaction);
-    ledger!.ledgerMap.add({
-      'date': DateTime.now(),
-      'type': TransactionType.addLoan,
-      'borrower': borrower,
-      'amount': declaredAmt,
-    });
-    print("Balance for ${borrower!.name}: ${borrower!.getBalance()}");
-    setState(() {});
-    Navigator.pop(context, ledger);
-  }
 
   @override
   Widget build(BuildContext context) {
+    void createBorrowerAcct(String createdUser, double declaredAmt) {
+      borrower = BorrowerAccount(createdUser);
+      var transaction = Transaction(
+        TransactionType.addLoan,
+        declaredAmt,
+        DateTime.now(),
+      );
+      borrower!.transactions.add(transaction);
+      print("Balance for ${borrower!.name}: ${borrower!.getBalance()}");
+    }
+
     return Scaffold(
       appBar: AppBar(title: Text('Add Borrower Account')),
       body: Container(
@@ -54,6 +42,7 @@ class _AddBorrowerState extends State<AddBorrower> {
                 var createdUser = userCtrl.text;
                 var declaredAmt = double.parse(amtCtrl.text);
                 createBorrowerAcct(createdUser, declaredAmt);
+                Navigator.pop(context, borrower); // send back to AppHome
               },
               child: Text('Click'),
             ),

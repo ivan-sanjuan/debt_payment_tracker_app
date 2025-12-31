@@ -7,26 +7,10 @@ import 'package:flutter/material.dart';
 
 class Ledger {
   BorrowerAccount borrower;
-  List<Map<String, dynamic>> ledgerMap = [];
+  double? total;
   TransactionType txType;
 
   Ledger(this.borrower, this.txType);
-
-  void addEntry(TransactionType type, double amount) {
-    ledgerMap.add({
-      'date': DateTime.now(),
-      'type': type,
-      'borrower': borrower,
-      'amount': amount,
-    });
-  }
-
-  double getAllTotal() {
-    return ledgerMap.fold(0.0, (total, x) {
-      final amt = x['amount'] as double;
-      return total + ((x['type'] == TransactionType.payLoan) ? -amt : amt);
-    });
-  }
 }
 
 class AppHome extends StatefulWidget {
@@ -39,20 +23,15 @@ class AppHome extends StatefulWidget {
 }
 
 class _AppHomeState extends State<AppHome> {
-  BorrowerAccount? user = BorrowerAccount();
-  Ledger? ledger;
+  List<BorrowerAccount> borrowers = [];
 
-  @override
-  void initState() {
-    super.initState();
-    user = widget.account;
-    if (user != null) {
-      ledger = Ledger(user!, TransactionType.addLoan);
-    }
+  double getTotalBalance() {
+    return borrowers.fold(0.0, (sum, borrower) => sum + borrower.getBalance());
   }
 
   @override
   Widget build(BuildContext context) {
+    final total = widget.account?.getBalance() ?? 0.0;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -73,20 +52,20 @@ class _AppHomeState extends State<AppHome> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Text('${ledger?.getAllTotal() ?? 0}'),
+              Text('${getTotalBalance()}'),
               ElevatedButton(
                 onPressed: () async {
-                  final newLedger = await Navigator.push(
+                  final newBorrower = await Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => AddBorrower()),
+                    MaterialPageRoute(builder: (_) => const AddBorrower()),
                   );
-                  if (newLedger != null && newLedger is Ledger) {
+                  if (newBorrower != null) {
                     setState(() {
-                      ledger = newLedger;
+                      borrowers.add(newBorrower);
                     });
                   }
                 },
-                child: Text('Add Borrower'),
+                child: const Text("Add Borrower"),
               ),
             ],
           ),

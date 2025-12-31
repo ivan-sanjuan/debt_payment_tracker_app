@@ -13,6 +13,7 @@ class BorrowerAccount {
   }
 
   double getBalance() {
+    print('getTotal invoked');
     return transactions.fold(
       0,
       (sum, n) =>
