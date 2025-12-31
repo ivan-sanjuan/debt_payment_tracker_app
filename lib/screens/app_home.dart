@@ -1,22 +1,14 @@
 import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
-import 'package:debt_payment_tracker_app/models/accounts.dart';
-import 'package:debt_payment_tracker_app/models/buttons.dart';
+import 'package:debt_payment_tracker_app/models/borrower_account.dart';
+import 'package:debt_payment_tracker_app/models/list_tile.dart';
 import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
 import 'package:flutter/material.dart';
 
-class Ledger {
-  BorrowerAccount borrower;
-  double? total;
-  TransactionType txType;
-
-  Ledger(this.borrower, this.txType);
-}
-
 class AppHome extends StatefulWidget {
-  final BorrowerAccount? account;
+  final BorrowerAccount? borrowerAccount;
 
-  AppHome({this.account, super.key});
+  const AppHome({this.borrowerAccount, super.key});
 
   @override
   State<AppHome> createState() => _AppHomeState();
@@ -25,51 +17,74 @@ class AppHome extends StatefulWidget {
 class _AppHomeState extends State<AppHome> {
   List<BorrowerAccount> borrowers = [];
 
-  double getTotalBalance() {
-    return borrowers.fold(0.0, (sum, borrower) => sum + borrower.getBalance());
+  double getAllTotal() {
+    return borrowers.fold(0, (sum, borrower) => sum + borrower.getBalance());
   }
 
   @override
   Widget build(BuildContext context) {
-    final total = widget.account?.getBalance() ?? 0.0;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Lending Tracker App',
-          style: TextStyle(fontSize: 22, color: Colors.white),
-        ),
-      ),
-      body: Container(
-        padding: const EdgeInsets.all(30),
-        child: Center(
-          child: Column(
-            children: [
-              const Text(
-                'TOTAL LENDED MONEY:',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: AppColor.secondary,
-                  fontWeight: FontWeight.bold,
+      appBar: AppBar(title: Text('Lending Money Tracker')),
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: 40, bottom: 30),
+            width: double.infinity,
+            color: AppColor.primary,
+            child: Column(
+              children: [
+                Text(
+                  'TOTAL LENDED MONEY:',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: AppColor.secondary,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text('${getTotalBalance()}'),
-              ElevatedButton(
-                onPressed: () async {
-                  final newBorrower = await Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const AddBorrower()),
-                  );
-                  if (newBorrower != null) {
-                    setState(() {
-                      borrowers.add(newBorrower);
-                    });
-                  }
-                },
-                child: const Text("Add Borrower"),
-              ),
-            ],
+                Text(
+                  '${getAllTotal()}',
+                  style: TextStyle(
+                    fontSize: 80,
+                    color: const Color.fromARGB(255, 255, 255, 255),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
+          Container(
+            child: Expanded(
+              child: ListView(
+                children: [
+                  AppListTile(
+                    'Create Borrower Account',
+                    'New Borrowers with No Accounts',
+                    Icon(Icons.person_add_alt_1_rounded),
+                    () async {
+                      final newBorrower = await Navigator.of(
+                        context,
+                      ).push(MaterialPageRoute(builder: (_) => AddBorrower()));
+                      if (newBorrower != null) {
+                        setState(() {
+                          borrowers.add(newBorrower);
+                        });
+                      }
+                    },
+                  ),
+                  AppListTile(
+                    'New Transaction',
+                    'Pay or Add on Existing Accounts',
+                    Icon(Icons.payments_rounded),
+                    () {
+                      Navigator.of(
+                        context,
+                      ).push(MaterialPageRoute(builder: (_) => AddBorrower()));
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

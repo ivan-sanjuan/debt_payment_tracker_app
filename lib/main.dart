@@ -1,5 +1,5 @@
 import 'package:debt_payment_tracker_app/constants/colors.dart';
-import 'package:debt_payment_tracker_app/models/accounts.dart';
+import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/screens/app_home.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ void main() {
           ),
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColor.primary,
+          backgroundColor: AppColor.primaryDark,
           titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
         ),
       ),

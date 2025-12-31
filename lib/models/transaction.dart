@@ -1,9 +1,11 @@
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
+import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 
 class Transaction {
-  TransactionType transactionType;
-  double amount;
-  DateTime txdate;
+  final DateTime txDate = DateTime.now();
+  final TransactionType txType;
+  final double amount;
+  final BorrowerAccount borrowerAccount;
 
-  Transaction(this.transactionType, this.amount, this.txdate);
+  Transaction(this.txType, this.amount, this.borrowerAccount);
 }
