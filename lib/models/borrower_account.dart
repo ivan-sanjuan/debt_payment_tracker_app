@@ -7,9 +7,8 @@ class BorrowerAccount {
 
   BorrowerAccount(this.name);
 
-  double createTransaction(Transaction transaction) {
+  void createTransaction(Transaction transaction) {
     transactions.add(transaction);
-    return getBalance();
   }
 
   double getBalance() {

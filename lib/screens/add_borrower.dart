@@ -1,5 +1,6 @@
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
+import 'package:debt_payment_tracker_app/models/borrower_card.dart';
 import 'package:debt_payment_tracker_app/models/transaction.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +15,7 @@ class _AddBorrowerState extends State<AddBorrower> {
   var nameCtrl = TextEditingController();
   var amtCtrl = TextEditingController();
 
-  void createBorrowerAccount() {
+  createBorrowerAccount() {
     var borrowerAccount = BorrowerAccount(nameCtrl.text);
     var transaction = Transaction(
       TransactionType.addLoan,
@@ -22,7 +23,10 @@ class _AddBorrowerState extends State<AddBorrower> {
       borrowerAccount,
     );
     borrowerAccount.transactions.add(transaction);
-    Navigator.pop(context, borrowerAccount);
+    Navigator.pop(context, {
+      'borrowerAccount': borrowerAccount,
+      'transaction': transaction,
+    });
   }
 
   @override

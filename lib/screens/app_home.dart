@@ -1,7 +1,9 @@
 import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
+import 'package:debt_payment_tracker_app/models/borrower_card.dart';
 import 'package:debt_payment_tracker_app/models/list_tile.dart';
+import 'package:debt_payment_tracker_app/models/transaction.dart';
 import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
 import 'package:debt_payment_tracker_app/screens/new_transaction.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +18,18 @@ class AppHome extends StatefulWidget {
 }
 
 class _AppHomeState extends State<AppHome> {
-  List<BorrowerAccount> borrowers = [];
+  List<BorrowerAccount> allBorrowers = [];
+  List<Transaction> allTransactions = [];
 
   double getAllTotal() {
-    return borrowers.fold(0, (sum, borrower) => sum + borrower.getBalance());
+    return allTransactions.fold(
+      0,
+      (sum, transaction) =>
+          sum +
+          (transaction.txType == TransactionType.payLoan
+              ? -transaction.amount
+              : transaction.amount),
+    );
   }
 
   @override
@@ -29,7 +39,7 @@ class _AppHomeState extends State<AppHome> {
       body: Column(
         children: [
           Container(
-            padding: EdgeInsets.only(top: 40, bottom: 30),
+            padding: EdgeInsets.all(30),
             width: double.infinity,
             decoration: BoxDecoration(
               color: AppColor.primaryDark,
@@ -58,45 +68,67 @@ class _AppHomeState extends State<AppHome> {
               ],
             ),
           ),
-          Container(
-            child: Expanded(
-              child: ListView(
-                children: [
-                  AppListTile(
-                    'Create Borrower Account',
-                    'New Borrowers with No Accounts',
-                    Icon(Icons.person_add_alt_1_rounded),
-                    () async {
-                      final newBorrower = await Navigator.of(
-                        context,
-                      ).push(MaterialPageRoute(builder: (_) => AddBorrower()));
-                      if (newBorrower != null) {
-                        setState(() {
-                          borrowers.add(newBorrower);
-                        });
-                      }
-                    },
-                  ),
-                  AppListTile(
-                    'New Transaction',
-                    'Pay or Add on Existing Accounts',
-                    Icon(Icons.payments_rounded),
-                    () async {
-                      final newTransaction = await Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              NewTransaction(currentBorrowers: borrowers),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(10),
+              children: [
+                AppListTile(
+                  'Create Borrower Account',
+                  'New Borrowers with No Accounts',
+                  Icon(Icons.person_add_alt_1_rounded),
+                  () async {
+                    final result = await Navigator.of(
+                      context,
+                    ).push(MaterialPageRoute(builder: (_) => AddBorrower()));
+                    if (result['borrowerAccount'] != null) {
+                      setState(() {
+                        allBorrowers.add(result['borrowerAccount']);
+                        allTransactions.add(result['transaction']);
+                      });
+                    }
+                  },
+                ),
+                AppListTile(
+                  'New Transaction',
+                  'Pay or Add on Existing Accounts',
+                  Icon(Icons.payments_rounded),
+                  () async {
+                    final newTransaction = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            NewTransaction(currentBorrowers: allBorrowers),
+                      ),
+                    );
+                    if (newTransaction != null) {
+                      setState(() {
+                        allTransactions.add(newTransaction);
+                      });
+                    }
+                  },
+                ),
+                Container(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        ' Recent Transactions',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.primary,
                         ),
-                      );
-                      if (newTransaction != null) {
-                        setState(() {
-                          borrowers.add(newTransaction);
-                        });
-                      }
-                    },
+                        textAlign: TextAlign.left,
+                      ),
+                      Column(
+                        children: allTransactions.map((e) {
+                          return BorrowerCard(e);
+                        }).toList(),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

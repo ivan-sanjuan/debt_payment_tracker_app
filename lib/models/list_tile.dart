@@ -20,7 +20,6 @@ class AppListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 10, left: 10, right: 10),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(10),

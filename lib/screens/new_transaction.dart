@@ -13,14 +13,14 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  static const String defaultValue = 'default';
+  TransactionType? selectedValue;
+  var amount = TextEditingController();
+  BorrowerAccount? borrowerAccount;
 
   @override
   Widget build(BuildContext context) {
-    List borrowerNames = widget.currentBorrowers
-        .map((e) => e.name)
-        .toSet()
-        .toList();
+    List borrowerNames = widget.currentBorrowers;
+
     return Scaffold(
       appBar: AppBar(title: Text('New Transaction')),
       body: Container(
@@ -28,10 +28,10 @@ class _NewTransactionState extends State<NewTransaction> {
           children: [
             DropdownMenu(
               width: double.infinity,
-              initialSelection: defaultValue,
+              hintText: 'Select a Transaction',
               onSelected: (value) {
                 setState(() {
-                  var selectedValue = value;
+                  selectedValue = value;
                 });
               },
               dropdownMenuEntries: const [
@@ -45,7 +45,38 @@ class _NewTransactionState extends State<NewTransaction> {
                 ),
               ],
             ),
-            Text('$borrowerNames'),
+            DropdownMenu(
+              hintText: 'Select an Account',
+              width: double.infinity,
+              onSelected: (valueAcct) {
+                setState(() {
+                  borrowerAccount = valueAcct;
+                });
+              },
+              dropdownMenuEntries:
+                  (borrowerNames == null || borrowerNames.isEmpty)
+                  ? [
+                      DropdownMenuEntry(
+                        value: 'no records',
+                        label: 'No Records',
+                      ),
+                    ]
+                  : borrowerNames.map((e) {
+                      return DropdownMenuEntry(value: e, label: '${e.name}');
+                    }).toList(),
+            ),
+            TextField(controller: amount),
+            ElevatedButton(
+              onPressed: () {
+                var transaction = Transaction(
+                  selectedValue!,
+                  double.parse(amount.text),
+                  borrowerAccount!,
+                );
+                Navigator.pop(context, transaction);
+              },
+              child: Text('Confirm'),
+            ),
           ],
         ),
       ),
