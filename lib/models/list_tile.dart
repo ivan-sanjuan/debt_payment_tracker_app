@@ -23,7 +23,7 @@ class AppListTile extends StatelessWidget {
       padding: EdgeInsets.only(top: 10, left: 10, right: 10),
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadiusGeometry.circular(3),
+          borderRadius: BorderRadiusGeometry.circular(10),
         ),
         color: AppColor.primaryDark,
         child: ListTile(

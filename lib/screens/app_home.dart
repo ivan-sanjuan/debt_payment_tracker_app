@@ -3,6 +3,7 @@ import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/models/list_tile.dart';
 import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
+import 'package:debt_payment_tracker_app/screens/new_transaction.dart';
 import 'package:flutter/material.dart';
 
 class AppHome extends StatefulWidget {
@@ -30,7 +31,13 @@ class _AppHomeState extends State<AppHome> {
           Container(
             padding: EdgeInsets.only(top: 40, bottom: 30),
             width: double.infinity,
-            color: AppColor.primary,
+            decoration: BoxDecoration(
+              color: AppColor.primaryDark,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
             child: Column(
               children: [
                 Text(
@@ -74,10 +81,18 @@ class _AppHomeState extends State<AppHome> {
                     'New Transaction',
                     'Pay or Add on Existing Accounts',
                     Icon(Icons.payments_rounded),
-                    () {
-                      Navigator.of(
-                        context,
-                      ).push(MaterialPageRoute(builder: (_) => AddBorrower()));
+                    () async {
+                      final newTransaction = await Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) =>
+                              NewTransaction(currentBorrowers: borrowers),
+                        ),
+                      );
+                      if (newTransaction != null) {
+                        setState(() {
+                          borrowers.add(newTransaction);
+                        });
+                      }
                     },
                   ),
                 ],

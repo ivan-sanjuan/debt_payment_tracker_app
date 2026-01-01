@@ -24,6 +24,7 @@ void main() {
         appBarTheme: AppBarTheme(
           backgroundColor: AppColor.primaryDark,
           titleTextStyle: TextStyle(color: Colors.white, fontSize: 22),
+          iconTheme: IconThemeData(color: Colors.white),
         ),
       ),
     ),
