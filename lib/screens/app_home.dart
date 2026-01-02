@@ -107,23 +107,29 @@ class _AppHomeState extends State<AppHome> {
                   },
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         ' Recent Transactions',
                         style: TextStyle(
-                          fontSize: 15,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: AppColor.primary,
                         ),
                         textAlign: TextAlign.left,
                       ),
                       Column(
-                        children: allTransactions.map((e) {
-                          return BorrowerCard(e);
-                        }).toList(),
+                        children: (allTransactions.isNotEmpty == true
+                            ? allTransactions.map((e) {
+                                return BorrowerCard(e);
+                              }).toList()
+                            : [
+                                Center(
+                                  child: Text('No Transactions Recorded.'),
+                                ),
+                              ]),
                       ),
                     ],
                   ),
