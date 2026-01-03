@@ -1,5 +1,6 @@
 import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
+import 'package:debt_payment_tracker_app/models/general_ledger.dart';
 import 'package:debt_payment_tracker_app/screens/app_home.dart';
 import 'package:flutter/material.dart';
 
@@ -36,6 +37,6 @@ class LendingTrackerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppHome();
+    return AppHome(generalLedger: GeneralLedger());
   }
 }

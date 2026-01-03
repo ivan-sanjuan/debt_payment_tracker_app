@@ -2,6 +2,7 @@ import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/models/borrower_card.dart';
+import 'package:debt_payment_tracker_app/models/general_ledger.dart';
 import 'package:debt_payment_tracker_app/models/list_tile.dart';
 import 'package:debt_payment_tracker_app/models/transaction.dart';
 import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
@@ -9,31 +10,18 @@ import 'package:debt_payment_tracker_app/screens/new_transaction.dart';
 import 'package:flutter/material.dart';
 
 class AppHome extends StatefulWidget {
-  final BorrowerAccount? borrowerAccount;
-
-  const AppHome({this.borrowerAccount, super.key});
+  final GeneralLedger generalLedger;
+  const AppHome({required this.generalLedger, super.key});
 
   @override
   State<AppHome> createState() => _AppHomeState();
 }
 
 class _AppHomeState extends State<AppHome> {
-  List<BorrowerAccount> allBorrowers = [];
-  List<Transaction> allTransactions = [];
-
-  double getAllTotal() {
-    return allTransactions.fold(
-      0,
-      (sum, transaction) =>
-          sum +
-          (transaction.txType == TransactionType.payLoan
-              ? -transaction.amount
-              : transaction.amount),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final allBorrowers = widget.generalLedger.allBorrowers;
+    final allTransactions = widget.generalLedger.allTransactions;
     return Scaffold(
       appBar: AppBar(title: Text('Lending Money Tracker')),
       body: Column(
@@ -59,7 +47,7 @@ class _AppHomeState extends State<AppHome> {
                   ),
                 ),
                 Text(
-                  '${getAllTotal()}',
+                  '${widget.generalLedger.getAllTotal()}',
                   style: TextStyle(
                     fontSize: 80,
                     color: const Color.fromARGB(255, 255, 255, 255),
@@ -77,13 +65,15 @@ class _AppHomeState extends State<AppHome> {
                   'New Borrowers with No Accounts',
                   Icon(Icons.person_add_alt_1_rounded),
                   () async {
-                    final result = await Navigator.of(
-                      context,
-                    ).push(MaterialPageRoute(builder: (_) => AddBorrower()));
-                    if (result['borrowerAccount'] != null) {
+                    final newBorrower = await Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            AddBorrower(generalLedger: widget.generalLedger),
+                      ),
+                    );
+                    if (newBorrower != null) {
                       setState(() {
-                        allBorrowers.add(result['borrowerAccount']);
-                        allTransactions.add(result['transaction']);
+                        allBorrowers.add(newBorrower);
                       });
                     }
                   },
@@ -95,8 +85,10 @@ class _AppHomeState extends State<AppHome> {
                   () async {
                     final newTransaction = await Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) =>
-                            NewTransaction(currentBorrowers: allBorrowers),
+                        builder: (_) => NewTransaction(
+                          generalLedger: widget.generalLedger,
+                          // currentBorrowers: allBorrowers,
+                        ),
                       ),
                     );
                     if (newTransaction != null) {

@@ -34,7 +34,7 @@ class _BorrowerCardState extends State<BorrowerCard> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(DateFormat('MMM d, yyyy').format(date)),
+            Text(formatter.format(date)),
             Text(
               (type == TransactionType.addLoan
                   ? 'Additional Loan'

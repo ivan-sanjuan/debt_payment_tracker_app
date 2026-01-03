@@ -1,11 +1,13 @@
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/models/borrower_card.dart';
+import 'package:debt_payment_tracker_app/models/general_ledger.dart';
 import 'package:debt_payment_tracker_app/models/transaction.dart';
 import 'package:flutter/material.dart';
 
 class AddBorrower extends StatefulWidget {
-  const AddBorrower({super.key});
+  final GeneralLedger generalLedger;
+  const AddBorrower({required this.generalLedger, super.key});
 
   @override
   State<AddBorrower> createState() => _AddBorrowerState();
@@ -15,7 +17,7 @@ class _AddBorrowerState extends State<AddBorrower> {
   var nameCtrl = TextEditingController();
   var amtCtrl = TextEditingController();
 
-  createBorrowerAccount() {
+  void createBorrowerAccount() {
     var borrowerAccount = BorrowerAccount(nameCtrl.text);
     var transaction = Transaction(
       TransactionType.addLoan,
@@ -23,10 +25,9 @@ class _AddBorrowerState extends State<AddBorrower> {
       borrowerAccount,
     );
     borrowerAccount.transactions.add(transaction);
-    Navigator.pop(context, {
-      'borrowerAccount': borrowerAccount,
-      'transaction': transaction,
-    });
+    widget.generalLedger.allTransactions.add(transaction);
+    widget.generalLedger.allBorrowers.add(borrowerAccount);
+    Navigator.pop(context, borrowerAccount);
   }
 
   @override
