@@ -40,7 +40,7 @@ class _BorrowerCardState extends State<BorrowerCard> {
                   ? 'Additional Loan'
                   : 'Loan Payment'),
             ),
-            Text(name),
+            Text(name!),
             Text('$amount'),
           ],
         ),

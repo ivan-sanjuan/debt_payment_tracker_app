@@ -72,9 +72,7 @@ class _AppHomeState extends State<AppHome> {
                       ),
                     );
                     if (newBorrower != null) {
-                      setState(() {
-                        allBorrowers.add(newBorrower);
-                      });
+                      setState(() {});
                     }
                   },
                 ),
@@ -92,9 +90,7 @@ class _AppHomeState extends State<AppHome> {
                       ),
                     );
                     if (newTransaction != null) {
-                      setState(() {
-                        allTransactions.add(newTransaction);
-                      });
+                      setState(() {});
                     }
                   },
                 ),

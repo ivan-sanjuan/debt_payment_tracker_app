@@ -33,10 +33,11 @@ void main() {
 }
 
 class LendingTrackerApp extends StatelessWidget {
-  const LendingTrackerApp({super.key});
+  final GeneralLedger ledger = GeneralLedger();
+  LendingTrackerApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return AppHome(generalLedger: GeneralLedger());
+    return AppHome(generalLedger: ledger);
   }
 }

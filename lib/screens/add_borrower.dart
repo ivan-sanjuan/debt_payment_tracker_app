@@ -18,16 +18,18 @@ class _AddBorrowerState extends State<AddBorrower> {
   var amtCtrl = TextEditingController();
 
   void createBorrowerAccount() {
-    var borrowerAccount = BorrowerAccount(nameCtrl.text);
+    var createdBorrower = BorrowerAccount(
+      ledger: widget.generalLedger,
+      name: nameCtrl.text,
+    );
     var transaction = Transaction(
       TransactionType.addLoan,
       double.parse(amtCtrl.text),
-      borrowerAccount,
+      createdBorrower,
     );
-    borrowerAccount.transactions.add(transaction);
-    widget.generalLedger.allTransactions.add(transaction);
-    widget.generalLedger.allBorrowers.add(borrowerAccount);
-    Navigator.pop(context, borrowerAccount);
+    createdBorrower.createTransaction(transaction);
+    createdBorrower.addBorrowerToGeneralLedger(createdBorrower);
+    Navigator.pop(context, createdBorrower);
   }
 
   @override

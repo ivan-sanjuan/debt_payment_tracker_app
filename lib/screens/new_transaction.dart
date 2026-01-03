@@ -35,12 +35,21 @@ class _NewTransactionState extends State<NewTransaction> {
                 actions: [
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(
-                          builder: (_) =>
-                              AddBorrower(generalLedger: widget.generalLedger),
-                        ),
-                      );
+                      Navigator.of(context)
+                          .push(
+                            MaterialPageRoute(
+                              builder: (_) => AddBorrower(
+                                generalLedger: widget.generalLedger,
+                              ),
+                            ),
+                          )
+                          .then((newBorrower) {
+                            if (newBorrower != null) {
+                              setState(() {
+                                borrowerAccount = newBorrower;
+                              });
+                            }
+                          });
                     },
                     child: Text('Yes'),
                   ),
@@ -97,13 +106,13 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                   TextField(controller: amount),
                   ElevatedButton(
-                    onPressed: () async {
-                      var transaction = await Transaction(
+                    onPressed: () {
+                      var transaction = Transaction(
                         selectedValue!,
                         double.parse(amount.text),
                         borrowerAccount!,
                       );
-                      borrowerAccount!.transactions.add(transaction);
+                      borrowerAccount!.createTransaction(transaction);
                       Navigator.pop(context, transaction);
                     },
                     child: Text('Confirm'),
