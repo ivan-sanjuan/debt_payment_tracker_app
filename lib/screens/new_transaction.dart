@@ -28,7 +28,7 @@ class _NewTransactionState extends State<NewTransaction> {
       body: Container(
         child: (borrowerList.isEmpty)
             ? AlertDialog(
-                title: Text('No Borrower Account found'),
+                title: Text('No Borrower Account Found'),
                 content: Text(
                   'Do you want to be directed to the borrower account creation screen?',
                 ),
