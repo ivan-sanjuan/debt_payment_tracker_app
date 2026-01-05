@@ -23,28 +23,56 @@ class _BorrowerCardState extends State<BorrowerCard> {
     var type = widget.transaction!.txType;
     var amount = widget.transaction!.amount;
     var date = widget.transaction!.txDate;
-    final DateFormat formatter = DateFormat('MMM d, yyyy');
+    final DateFormat formatter = DateFormat('MMM dd, yyyy');
 
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(5),
-      ),
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text(formatter.format(date)),
-            Text(
-              (type == TransactionType.addLoan
-                  ? 'Borrow Money'
-                  : 'Loan Payment'),
+    return (type == TransactionType.payLoan
+        ? Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(30),
             ),
-            Text(name!),
-            Text('$amount'),
-          ],
-        ),
-      ),
-    );
+            child: Container(
+              color: Colors.lightGreen,
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(child: Text(formatter.format(date))),
+                  Expanded(
+                    child: Text(
+                      (type == TransactionType.addLoan
+                          ? 'Borrow Money'
+                          : 'Loan Payment'),
+                    ),
+                  ),
+                  Expanded(child: Text(name!)),
+                  Expanded(child: Text('-$amount')),
+                ],
+              ),
+            ),
+          )
+        : Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadiusGeometry.circular(30),
+            ),
+            child: Container(
+              color: Colors.red[600],
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Expanded(child: Text(formatter.format(date))),
+                  Expanded(
+                    child: Text(
+                      (type == TransactionType.addLoan
+                          ? 'Borrow Money'
+                          : 'Loan Payment'),
+                    ),
+                  ),
+                  Expanded(child: Text(name!)),
+                  Expanded(child: Text('$amount')),
+                ],
+              ),
+            ),
+          ));
   }
 }
