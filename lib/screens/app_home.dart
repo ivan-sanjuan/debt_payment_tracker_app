@@ -23,7 +23,7 @@ class _AppHomeState extends State<AppHome> {
     final allBorrowers = widget.generalLedger.allBorrowers;
     final allTransactions = widget.generalLedger.allTransactions;
     return Scaffold(
-      appBar: AppBar(title: Text('Lending Money Tracker')),
+      appBar: AppBar(title: Text('Money Lending Tracker')),
       body: Column(
         children: [
           Container(

@@ -37,7 +37,7 @@ class _BorrowerCardState extends State<BorrowerCard> {
             Text(formatter.format(date)),
             Text(
               (type == TransactionType.addLoan
-                  ? 'Additional Loan'
+                  ? 'Borrow Money'
                   : 'Loan Payment'),
             ),
             Text(name!),

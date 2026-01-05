@@ -47,6 +47,7 @@ class _NewTransactionState extends State<NewTransaction> {
                             if (newBorrower != null) {
                               setState(() {
                                 borrowerAccount = newBorrower;
+                                Navigator.pop(context, newBorrower);
                               });
                             }
                           });
