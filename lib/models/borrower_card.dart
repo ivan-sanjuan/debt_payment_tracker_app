@@ -27,49 +27,107 @@ class _BorrowerCardState extends State<BorrowerCard> {
 
     return (type == TransactionType.payLoan
         ? Card(
+            color: const Color.fromARGB(255, 219, 219, 219),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(30),
+              borderRadius: BorderRadiusGeometry.circular(10),
             ),
             child: Container(
-              color: Colors.lightGreen,
               padding: EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(child: Text(formatter.format(date))),
-                  Expanded(
+                  SizedBox(
+                    width: 100,
                     child: Text(
-                      (type == TransactionType.addLoan
-                          ? 'Borrow Money'
-                          : 'Loan Payment'),
+                      formatter.format(date),
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 58, 58, 58),
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                  Expanded(child: Text(name!)),
-                  Expanded(child: Text('-$amount')),
+                  Expanded(
+                    child: Text(
+                      'Loan Payment',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Text(
+                      name!,
+                      style: TextStyle(
+                        color: AppColor.primaryDark,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 60,
+                    child: Text(
+                      '-$amount',
+                      style: TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
           )
         : Card(
+            color: const Color.fromARGB(255, 219, 219, 219),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadiusGeometry.circular(30),
+              borderRadius: BorderRadiusGeometry.circular(10),
             ),
             child: Container(
-              color: Colors.red[600],
               padding: EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(child: Text(formatter.format(date))),
-                  Expanded(
+                  SizedBox(
+                    width: 100,
                     child: Text(
-                      (type == TransactionType.addLoan
-                          ? 'Borrow Money'
-                          : 'Loan Payment'),
+                      formatter.format(date),
+                      style: TextStyle(
+                        color: const Color.fromARGB(255, 58, 58, 58),
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
-                  Expanded(child: Text(name!)),
-                  Expanded(child: Text('$amount')),
+                  Expanded(
+                    child: Text(
+                      'Borrow Money',
+                      style: TextStyle(
+                        color: Colors.red[700],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Text(
+                      name!,
+                      style: TextStyle(
+                        color: AppColor.primaryDark,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 60,
+                    child: Text(
+                      '$amount',
+                      style: TextStyle(
+                        color: Colors.red[700],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
