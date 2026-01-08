@@ -14,6 +14,18 @@ class ViewTransactions extends StatefulWidget {
 class _ViewTransactionsState extends State<ViewTransactions> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    var borrowerAccounts = widget.generalLedger.allBorrowers;
+    return Scaffold(
+      appBar: AppBar(title: Text('View Transactions')),
+      body: Column(
+        children: [
+          DropdownMenu(
+            dropdownMenuEntries: borrowerAccounts.map((e) {
+              return DropdownMenuEntry(value: e, label: '${e.name}');
+            }).toList(),
+          ),
+        ],
+      ),
+    );
   }
 }
