@@ -62,63 +62,76 @@ class _NewTransactionState extends State<NewTransaction> {
                   ),
                 ],
               )
-            : Column(
-                children: [
-                  DropdownMenu(
-                    width: double.infinity,
-                    hintText: 'Select a Transaction',
-                    onSelected: (value) {
-                      setState(() {
-                        selectedValue = value;
-                      });
-                    },
-                    dropdownMenuEntries: const [
-                      DropdownMenuEntry(
-                        value: TransactionType.addLoan,
-                        label: 'Add New Loan Entry',
+            : Container(
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  spacing: 10,
+                  children: [
+                    DropdownMenu(
+                      width: double.infinity,
+                      hintText: 'Select a Transaction',
+                      onSelected: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(
+                          value: TransactionType.addLoan,
+                          label: 'Add New Loan Entry',
+                        ),
+                        DropdownMenuEntry(
+                          value: TransactionType.payLoan,
+                          label: 'Pay an Existing Loan',
+                        ),
+                      ],
+                    ),
+                    DropdownMenu(
+                      hintText: 'Select an Account',
+                      width: double.infinity,
+                      onSelected: (valueAcct) {
+                        setState(() {
+                          borrowerAccount = valueAcct;
+                        });
+                      },
+                      dropdownMenuEntries: (borrowerList.isEmpty)
+                          ? [
+                              DropdownMenuEntry(
+                                value: 'no records',
+                                label: 'No Records',
+                              ),
+                            ]
+                          : borrowerList.map((e) {
+                              return DropdownMenuEntry(
+                                value: e,
+                                label: '${e.name}',
+                              );
+                            }).toList(),
+                    ),
+                    TextField(
+                      controller: amount,
+                      decoration: InputDecoration(
+                        hint: Text(
+                          'Enter Amount',
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        border: OutlineInputBorder(),
                       ),
-                      DropdownMenuEntry(
-                        value: TransactionType.payLoan,
-                        label: 'Pay an Existing Loan',
-                      ),
-                    ],
-                  ),
-                  DropdownMenu(
-                    hintText: 'Select an Account',
-                    width: double.infinity,
-                    onSelected: (valueAcct) {
-                      setState(() {
-                        borrowerAccount = valueAcct;
-                      });
-                    },
-                    dropdownMenuEntries: (borrowerList.isEmpty)
-                        ? [
-                            DropdownMenuEntry(
-                              value: 'no records',
-                              label: 'No Records',
-                            ),
-                          ]
-                        : borrowerList.map((e) {
-                            return DropdownMenuEntry(
-                              value: e,
-                              label: '${e.name}',
-                            );
-                          }).toList(),
-                  ),
-                  TextField(controller: amount),
-                  ElevatedButton(
-                    onPressed: () {
-                      var transaction = Transaction(
-                        selectedValue!,
-                        double.parse(amount.text),
-                        borrowerAccount!,
-                      );
-                      borrowerAccount!.createTransaction(transaction);
-                      Navigator.pop(context, transaction);
-                    },
-                    child: Text('Confirm'),
-                  ),
-                ],
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        var transaction = Transaction(
+                          selectedValue!,
+                          double.parse(amount.text),
+                          borrowerAccount!,
+                        );
+                        borrowerAccount!.createTransaction(transaction);
+                        Navigator.pop(context, transaction);
+                      },
+                      child: Text('Confirm'),
+                    ),
+                  ],
+                ),
               ),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/models/borrower_card.dart';
@@ -36,15 +37,39 @@ class _AddBorrowerState extends State<AddBorrower> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Add Borrower')),
-      body: Column(
-        children: [
-          TextField(controller: nameCtrl),
-          TextField(controller: amtCtrl),
-          ElevatedButton(
-            onPressed: createBorrowerAccount,
-            child: Text('Create Account'),
+      body: Expanded(
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            spacing: 10,
+            children: [
+              TextField(
+                controller: nameCtrl,
+                decoration: InputDecoration(
+                  hint: Text(
+                    'Enter Full Name',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              TextField(
+                controller: amtCtrl,
+                decoration: InputDecoration(
+                  hint: Text(
+                    'Amount Borrowed',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: createBorrowerAccount,
+                child: Text('Create Account'),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

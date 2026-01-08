@@ -7,6 +7,7 @@ import 'package:debt_payment_tracker_app/models/list_tile.dart';
 import 'package:debt_payment_tracker_app/models/transaction.dart';
 import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
 import 'package:debt_payment_tracker_app/screens/new_transaction.dart';
+import 'package:debt_payment_tracker_app/screens/view_transactions.dart';
 import 'package:flutter/material.dart';
 
 class AppHome extends StatefulWidget {
@@ -92,6 +93,20 @@ class _AppHomeState extends State<AppHome> {
                     if (newTransaction != null) {
                       setState(() {});
                     }
+                  },
+                ),
+                AppListTile(
+                  'View Borrower Transactions',
+                  'View all transactions of a borrower',
+                  Icon(Icons.list),
+                  () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => ViewTransactions(
+                          generalLedger: widget.generalLedger,
+                        ),
+                      ),
+                    );
                   },
                 ),
                 Container(
