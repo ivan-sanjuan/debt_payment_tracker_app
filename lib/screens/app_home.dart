@@ -99,14 +99,17 @@ class _AppHomeState extends State<AppHome> {
                   'View Borrower Transactions',
                   'View all transactions of a borrower',
                   Icon(Icons.list),
-                  () {
-                    Navigator.of(context).push(
+                  () async {
+                    final newBorrower = await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => ViewTransactions(
                           generalLedger: widget.generalLedger,
                         ),
                       ),
                     );
+                    if (newBorrower != null) {
+                      setState(() {});
+                    }
                   },
                 ),
                 Container(
