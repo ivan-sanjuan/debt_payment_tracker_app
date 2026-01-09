@@ -1,3 +1,4 @@
+import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/models/general_ledger.dart';
@@ -67,25 +68,43 @@ class _NewTransactionState extends State<NewTransaction> {
                 child: Column(
                   spacing: 10,
                   children: [
-                    DropdownMenu(
-                      width: double.infinity,
-                      hintText: 'Select a Transaction',
-                      onSelected: (value) {
-                        setState(() {
-                          selectedValue = value;
-                        });
-                      },
-                      dropdownMenuEntries: const [
-                        DropdownMenuEntry(
-                          value: TransactionType.addLoan,
-                          label: 'Add New Loan Entry',
-                        ),
-                        DropdownMenuEntry(
-                          value: TransactionType.payLoan,
-                          label: 'Pay an Existing Loan',
-                        ),
-                      ],
-                    ),
+                    ...(borrowerAccount != null
+                        ? [
+                            Text(
+                              'Current Balance:',
+                              style: TextStyle(
+                                color: AppColor.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),
+                            ),
+                            Text(
+                              '${borrowerAccount!.getBorrowerBalance()}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 80,
+                                color: AppColor.secondary,
+                              ),
+                            ),
+                          ]
+                        : [
+                            Text(
+                              'No Account Selected',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                                color: AppColor.primary,
+                              ),
+                            ),
+                            Text(
+                              '0.0',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 80,
+                                color: AppColor.secondary,
+                              ),
+                            ),
+                          ]),
                     DropdownMenu(
                       hintText: 'Select an Account',
                       width: double.infinity,
@@ -108,6 +127,26 @@ class _NewTransactionState extends State<NewTransaction> {
                               );
                             }).toList(),
                     ),
+                    DropdownMenu(
+                      width: double.infinity,
+                      hintText: 'Select a Transaction',
+                      onSelected: (value) {
+                        setState(() {
+                          selectedValue = value;
+                        });
+                      },
+                      dropdownMenuEntries: const [
+                        DropdownMenuEntry(
+                          value: TransactionType.addLoan,
+                          label: 'Add New Loan Entry',
+                        ),
+                        DropdownMenuEntry(
+                          value: TransactionType.payLoan,
+                          label: 'Pay an Existing Loan',
+                        ),
+                      ],
+                    ),
+
                     TextField(
                       controller: amount,
                       decoration: InputDecoration(
