@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/models/general_ledger.dart';
+import 'package:debt_payment_tracker_app/models/transactions_card.dart';
 import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
 import 'package:flutter/material.dart';
 
@@ -66,6 +69,13 @@ class _ViewTransactionsState extends State<ViewTransactions> {
                     });
                   },
                 ),
+                ...(selectedAccount != null
+                    ? [
+                        Text('${selectedAccount!.getBorrowerBalance()}'),
+                        ...selectedAccount!.borrowerTransactionsList.reversed
+                            .map((e) => AppTxCard(transaction: e)),
+                      ]
+                    : [Text('No Account Selected')]),
               ],
             )),
     );
