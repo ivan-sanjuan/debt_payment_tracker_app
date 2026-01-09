@@ -128,7 +128,7 @@ class _AppHomeState extends State<AppHome> {
                       ),
                       Column(
                         children: (allTransactions.isNotEmpty == true
-                            ? allTransactions.map((e) {
+                            ? allTransactions.reversed.map((e) {
                                 return BorrowerCard(e);
                               }).toList()
                             : [
