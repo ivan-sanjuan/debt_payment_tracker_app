@@ -81,7 +81,8 @@ class _NewTransactionState extends State<NewTransaction> {
                             ),
 
                             Text(
-                              '${borrowerAccount!.getBorrowerBalance()}',
+                              (borrowerAccount!.getBorrowerBalance())
+                                  .toStringAsFixed(2),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 80,
@@ -98,7 +99,7 @@ class _NewTransactionState extends State<NewTransaction> {
                               ),
                             ),
                             Text(
-                              '$runValue',
+                              runValue.toStringAsFixed(2),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 80,
@@ -173,6 +174,7 @@ class _NewTransactionState extends State<NewTransaction> {
 
                     TextField(
                       controller: amount,
+                      maxLines: 1,
                       decoration: InputDecoration(
                         hint: Text(
                           'Enter Amount',
