@@ -18,21 +18,6 @@ class _AddBorrowerState extends State<AddBorrower> {
   var nameCtrl = TextEditingController();
   var amtCtrl = TextEditingController();
 
-  void createBorrowerAccount() {
-    var createdBorrower = BorrowerAccount(
-      ledger: widget.generalLedger,
-      name: nameCtrl.text,
-    );
-    var transaction = Transaction(
-      TransactionType.addLoan,
-      double.parse(amtCtrl.text),
-      createdBorrower,
-    );
-    createdBorrower.createTransaction(transaction);
-    createdBorrower.addBorrowerToGeneralLedger(createdBorrower);
-    Navigator.pop(context, createdBorrower);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,34 +25,53 @@ class _AddBorrowerState extends State<AddBorrower> {
       body: Expanded(
         child: Container(
           padding: EdgeInsets.all(20),
-          child: Column(
-            spacing: 10,
-            children: [
-              TextField(
-                controller: nameCtrl,
-                decoration: InputDecoration(
-                  hint: Text(
-                    'Enter Full Name',
-                    style: TextStyle(color: Colors.grey),
+          child: Center(
+            child: Column(
+              spacing: 10,
+              children: [
+                TextField(
+                  controller: nameCtrl,
+                  decoration: InputDecoration(
+                    hint: Text(
+                      'Enter Full Name',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    border: OutlineInputBorder(),
                   ),
-                  border: OutlineInputBorder(),
                 ),
-              ),
-              TextField(
-                controller: amtCtrl,
-                decoration: InputDecoration(
-                  hint: Text(
-                    'Amount Borrowed',
-                    style: TextStyle(color: Colors.grey),
+                TextField(
+                  controller: amtCtrl,
+                  decoration: InputDecoration(
+                    hint: Text(
+                      'Amount Borrowed',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                    border: OutlineInputBorder(),
                   ),
-                  border: OutlineInputBorder(),
                 ),
-              ),
-              ElevatedButton(
-                onPressed: createBorrowerAccount,
-                child: Text('Create Account'),
-              ),
-            ],
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      final createdBorrower = BorrowerAccount(
+                        ledger: widget.generalLedger,
+                        name: nameCtrl.text,
+                      );
+                      final initialTransaction = Transaction(
+                        TransactionType.addLoan,
+                        double.parse(amtCtrl.text),
+                        createdBorrower,
+                      );
+                      createdBorrower.createTransaction(initialTransaction);
+                      createdBorrower.addBorrowerToGeneralLedger(
+                        createdBorrower,
+                      );
+                      Navigator.pop(context, createdBorrower);
+                    });
+                  },
+                  child: Text('Create Account'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
