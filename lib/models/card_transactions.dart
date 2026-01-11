@@ -2,6 +2,7 @@ import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/models/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AppTxCard extends StatelessWidget {
   final Transaction? transaction;
@@ -10,6 +11,11 @@ class AppTxCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateFormat formatter = DateFormat('MMM d, yyyy hh:mm a');
+    NumberFormat numberFormat = NumberFormat.currency(
+      locale: 'en_PH',
+      symbol: '₱',
+    );
     return Card(
       elevation: 1,
       shape: RoundedRectangleBorder(
@@ -20,7 +26,7 @@ class AppTxCard extends StatelessWidget {
         child: Row(
           children: [
             Expanded(
-              flex: 5,
+              flex: 6,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -41,30 +47,23 @@ class AppTxCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         )),
-                  Text('${transaction!.txDate}'),
+                  Text(formatter.format(transaction!.txDate)),
                 ],
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 3,
               child: Container(
-                child: (transaction!.txType == TransactionType.payLoan
-                    ? Text(
-                        '-₱${transaction!.amount}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.lightGreen,
-                        ),
-                      )
-                    : Text(
-                        '₱${transaction!.amount}',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.red,
-                        ),
-                      )),
+                child: Text(
+                  '${transaction!.txType == TransactionType.payLoan ? '-' : ''}${numberFormat.format(transaction!.amount)}',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: (transaction!.txType == TransactionType.payLoan
+                        ? Colors.lightGreen
+                        : Colors.red),
+                  ),
+                ),
               ),
             ),
           ],
