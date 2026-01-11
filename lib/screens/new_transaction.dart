@@ -19,6 +19,7 @@ class _NewTransactionState extends State<NewTransaction> {
   TransactionType? selectedValue;
   var amount = TextEditingController();
   BorrowerAccount? borrowerAccount;
+  double runValue = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -78,12 +79,32 @@ class _NewTransactionState extends State<NewTransaction> {
                                 fontSize: 25,
                               ),
                             ),
+
                             Text(
                               '${borrowerAccount!.getBorrowerBalance()}',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 80,
                                 color: AppColor.secondary,
+                              ),
+                            ),
+
+                            Text(
+                              'Balance after Transaction:',
+                              style: TextStyle(
+                                color: AppColor.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),
+                            ),
+                            Text(
+                              '$runValue',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 80,
+                                color: (selectedValue == TransactionType.payLoan
+                                    ? AppColor.secondary
+                                    : Colors.red),
                               ),
                             ),
                           ]
@@ -111,6 +132,7 @@ class _NewTransactionState extends State<NewTransaction> {
                       onSelected: (valueAcct) {
                         setState(() {
                           borrowerAccount = valueAcct;
+                          runValue = borrowerAccount!.getBorrowerBalance();
                         });
                       },
                       dropdownMenuEntries: (borrowerList.isEmpty)
@@ -133,6 +155,8 @@ class _NewTransactionState extends State<NewTransaction> {
                       onSelected: (value) {
                         setState(() {
                           selectedValue = value;
+                          amount.clear();
+                          runValue = borrowerAccount!.getBorrowerBalance();
                         });
                       },
                       dropdownMenuEntries: const [
@@ -156,6 +180,14 @@ class _NewTransactionState extends State<NewTransaction> {
                         ),
                         border: OutlineInputBorder(),
                       ),
+                      onChanged: (onChangedValue) {
+                        setState(() {
+                          final parse = (double.tryParse(onChangedValue) ?? 0);
+                          runValue = selectedValue == TransactionType.payLoan
+                              ? borrowerAccount!.getBorrowerBalance() - parse
+                              : borrowerAccount!.getBorrowerBalance() + parse;
+                        });
+                      },
                     ),
                     ElevatedButton(
                       onPressed: () {
