@@ -1,11 +1,13 @@
 import 'dart:math';
 
+import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
 import 'package:debt_payment_tracker_app/models/general_ledger.dart';
-import 'package:debt_payment_tracker_app/models/transactions_card.dart';
+import 'package:debt_payment_tracker_app/models/card_transactions.dart';
 import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ViewTransactions extends StatefulWidget {
   final GeneralLedger generalLedger;
@@ -18,6 +20,10 @@ class ViewTransactions extends StatefulWidget {
 
 class _ViewTransactionsState extends State<ViewTransactions> {
   BorrowerAccount? selectedAccount;
+  NumberFormat numberFormat = NumberFormat.currency(
+    locale: 'en_PH',
+    symbol: '₱',
+  );
   @override
   Widget build(BuildContext context) {
     var borrowerAccounts = widget.generalLedger.allBorrowers;
@@ -57,26 +63,48 @@ class _ViewTransactionsState extends State<ViewTransactions> {
                 ),
               ],
             )
-          : Column(
-              children: [
-                DropdownMenu(
-                  dropdownMenuEntries: borrowerAccounts.map((e) {
-                    return DropdownMenuEntry(value: e, label: '${e.name}');
-                  }).toList(),
-                  onSelected: (BorrowerAccount? value) {
-                    setState(() {
-                      selectedAccount = value;
-                    });
-                  },
-                ),
-                ...(selectedAccount != null
-                    ? [
-                        Text('${selectedAccount!.getBorrowerBalance()}'),
-                        ...selectedAccount!.borrowerTransactionsList.reversed
-                            .map((e) => AppTxCard(transaction: e)),
-                      ]
-                    : [Text('No Account Selected')]),
-              ],
+          : Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  DropdownMenu(
+                    hintText: 'Select an Account',
+                    width: double.infinity,
+                    dropdownMenuEntries: borrowerAccounts.map((e) {
+                      return DropdownMenuEntry(value: e, label: '${e.name}');
+                    }).toList(),
+                    onSelected: (BorrowerAccount? value) {
+                      setState(() {
+                        selectedAccount = value;
+                      });
+                    },
+                  ),
+                  ...(selectedAccount != null
+                      ? [
+                          Text(
+                            'Current Balance:',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: AppColor.primary,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            numberFormat.format(
+                              selectedAccount!.getBorrowerBalance(),
+                            ),
+                            style: TextStyle(
+                              fontSize: 40,
+                              color: Colors.lightGreen,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          ...selectedAccount!.borrowerTransactionsList.reversed
+                              .map((e) => AppTxCard(transaction: e)),
+                        ]
+                      : [Text('No Account Selected')]),
+                ],
+              ),
             )),
     );
   }
