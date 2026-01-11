@@ -1,7 +1,7 @@
 import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
-import 'package:debt_payment_tracker_app/models/borrower_card.dart';
+import 'package:debt_payment_tracker_app/models/card_recent_transactions.dart';
 import 'package:debt_payment_tracker_app/models/general_ledger.dart';
 import 'package:debt_payment_tracker_app/models/list_tile.dart';
 import 'package:debt_payment_tracker_app/models/transaction.dart';
@@ -9,6 +9,7 @@ import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
 import 'package:debt_payment_tracker_app/screens/new_transaction.dart';
 import 'package:debt_payment_tracker_app/screens/view_transactions.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class AppHome extends StatefulWidget {
   final GeneralLedger generalLedger;
@@ -19,6 +20,7 @@ class AppHome extends StatefulWidget {
 }
 
 class _AppHomeState extends State<AppHome> {
+  final phCurrency = NumberFormat.currency(locale: 'en_PH', symbol: '₱');
   @override
   Widget build(BuildContext context) {
     final allBorrowers = widget.generalLedger.allBorrowers;
@@ -48,9 +50,9 @@ class _AppHomeState extends State<AppHome> {
                   ),
                 ),
                 Text(
-                  '${widget.generalLedger.getAllTotal()}',
+                  phCurrency.format(widget.generalLedger.getAllTotal()),
                   style: TextStyle(
-                    fontSize: 80,
+                    fontSize: 60,
                     color: const Color.fromARGB(255, 255, 255, 255),
                   ),
                 ),
@@ -79,7 +81,7 @@ class _AppHomeState extends State<AppHome> {
                 ),
                 AppListTile(
                   'New Transaction',
-                  'Pay or Add on Existing Accounts',
+                  'Pay or Add existing loans',
                   Icon(Icons.payments_rounded),
                   () async {
                     final newTransaction = await Navigator.of(context).push(
@@ -126,16 +128,18 @@ class _AppHomeState extends State<AppHome> {
                         ),
                         textAlign: TextAlign.left,
                       ),
-                      Column(
-                        children: (allTransactions.isNotEmpty == true
-                            ? allTransactions.reversed.map((e) {
-                                return BorrowerCard(e);
-                              }).toList()
-                            : [
-                                Center(
-                                  child: Text('No Transactions Recorded.'),
-                                ),
-                              ]),
+                      SingleChildScrollView(
+                        child: Column(
+                          children: (allTransactions.isNotEmpty == true
+                              ? allTransactions.reversed.map((e) {
+                                  return RecentTransactions(e);
+                                }).toList()
+                              : [
+                                  Center(
+                                    child: Text('No Transactions Recorded.'),
+                                  ),
+                                ]),
+                        ),
                       ),
                     ],
                   ),
