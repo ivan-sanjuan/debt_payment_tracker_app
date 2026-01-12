@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:debt_payment_tracker_app/constants/colors.dart';
 import 'package:debt_payment_tracker_app/constants/transaction_type.dart';
 import 'package:debt_payment_tracker_app/models/borrower_account.dart';
@@ -131,9 +133,13 @@ class _AppHomeState extends State<AppHome> {
                       SingleChildScrollView(
                         child: Column(
                           children: (allTransactions.isNotEmpty == true
-                              ? allTransactions.reversed.map((e) {
-                                  return RecentTransactions(e);
-                                }).toList()
+                              ? allTransactions
+                                    .sublist(max(0, allTransactions.length - 5))
+                                    .reversed
+                                    .map((e) {
+                                      return RecentTransactions(e);
+                                    })
+                                    .toList()
                               : [
                                   Center(
                                     child: Text('No Transactions Recorded.'),
