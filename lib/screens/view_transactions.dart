@@ -67,40 +67,61 @@ class _ViewTransactionsState extends State<ViewTransactions> {
               padding: EdgeInsets.all(10),
               child: Column(
                 children: [
-                  DropdownMenu(
-                    hintText: 'Select an Account',
-                    width: double.infinity,
-                    dropdownMenuEntries: borrowerAccounts.map((e) {
-                      return DropdownMenuEntry(value: e, label: '${e.name}');
-                    }).toList(),
-                    onSelected: (BorrowerAccount? value) {
-                      setState(() {
-                        selectedAccount = value;
-                      });
-                    },
+                  Container(
+                    padding: EdgeInsets.only(top: 20),
+                    child: DropdownMenu(
+                      hintText: 'Select an Account',
+                      width: double.infinity,
+                      dropdownMenuEntries: borrowerAccounts.map((e) {
+                        return DropdownMenuEntry(value: e, label: '${e.name}');
+                      }).toList(),
+                      onSelected: (BorrowerAccount? value) {
+                        setState(() {
+                          selectedAccount = value;
+                        });
+                      },
+                    ),
                   ),
                   ...(selectedAccount != null
                       ? [
-                          Text(
-                            'Current Balance:',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: AppColor.primary,
-                              fontWeight: FontWeight.bold,
+                          Container(
+                            padding: EdgeInsets.only(top: 20),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Current Balance:',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppColor.primary,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  numberFormat.format(
+                                    selectedAccount!.getBorrowerBalance(),
+                                  ),
+                                  style: TextStyle(
+                                    fontSize: 40,
+                                    color: Colors.lightGreen,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(top: 20),
+                                  child: Column(
+                                    children: [
+                                      ...selectedAccount!
+                                          .borrowerTransactionsList
+                                          .reversed
+                                          .map(
+                                            (e) => AppTxCard(transaction: e),
+                                          ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          Text(
-                            numberFormat.format(
-                              selectedAccount!.getBorrowerBalance(),
-                            ),
-                            style: TextStyle(
-                              fontSize: 40,
-                              color: Colors.lightGreen,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          ...selectedAccount!.borrowerTransactionsList.reversed
-                              .map((e) => AppTxCard(transaction: e)),
                         ]
                       : [Text('No Account Selected')]),
                 ],
