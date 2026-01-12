@@ -32,10 +32,10 @@ class _RecentTransactionsState extends State<RecentTransactions> {
     return Card(
       color: const Color.fromARGB(255, 219, 219, 219),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusGeometry.circular(10),
+        borderRadius: BorderRadiusGeometry.circular(5),
       ),
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(13),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
