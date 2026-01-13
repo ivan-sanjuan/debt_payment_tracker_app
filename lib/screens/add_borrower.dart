@@ -49,26 +49,33 @@ class _AddBorrowerState extends State<AddBorrower> {
                     border: OutlineInputBorder(),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      final createdBorrower = BorrowerAccount(
-                        ledger: widget.generalLedger,
-                        name: nameCtrl.text,
-                      );
-                      final initialTransaction = Transaction(
-                        TransactionType.addLoan,
-                        double.parse(amtCtrl.text),
-                        createdBorrower,
-                      );
-                      createdBorrower.createTransaction(initialTransaction);
-                      createdBorrower.addBorrowerToGeneralLedger(
-                        createdBorrower,
-                      );
-                      Navigator.pop(context, createdBorrower);
-                    });
-                  },
-                  child: Text('Create Account'),
+                Container(
+                  width: double.infinity,
+                  height: 65,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        final createdBorrower = BorrowerAccount(
+                          ledger: widget.generalLedger,
+                          name: nameCtrl.text,
+                        );
+                        final initialTransaction = Transaction(
+                          TransactionType.addLoan,
+                          double.parse(amtCtrl.text),
+                          createdBorrower,
+                        );
+                        createdBorrower.createTransaction(initialTransaction);
+                        createdBorrower.addBorrowerToGeneralLedger(
+                          createdBorrower,
+                        );
+                        Navigator.pop(context, createdBorrower);
+                      });
+                    },
+                    child: Text(
+                      'Create Account',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
                 ),
               ],
             ),
