@@ -185,23 +185,34 @@ class _NewTransactionState extends State<NewTransaction> {
                       onChanged: (onChangedValue) {
                         setState(() {
                           final parse = (double.tryParse(onChangedValue) ?? 0);
+                          if (selectedValue == TransactionType.payLoan &&
+                              double.parse(onChangedValue) >
+                                  borrowerAccount!.getBorrowerBalance()) {
+                            amount.text =
+                                '${borrowerAccount!.getBorrowerBalance()}';
+                            runValue = 0;
+                          }
                           runValue = selectedValue == TransactionType.payLoan
                               ? borrowerAccount!.getBorrowerBalance() - parse
                               : borrowerAccount!.getBorrowerBalance() + parse;
                         });
                       },
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        var transaction = Transaction(
-                          selectedValue!,
-                          double.parse(amount.text),
-                          borrowerAccount!,
-                        );
-                        borrowerAccount!.createTransaction(transaction);
-                        Navigator.pop(context, transaction);
-                      },
-                      child: Text('Confirm'),
+                    Container(
+                      width: double.infinity,
+                      height: 65,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          var transaction = Transaction(
+                            selectedValue!,
+                            double.parse(amount.text),
+                            borrowerAccount!,
+                          );
+                          borrowerAccount!.createTransaction(transaction);
+                          Navigator.pop(context, transaction);
+                        },
+                        child: Text('Confirm', style: TextStyle(fontSize: 20)),
+                      ),
                     ),
                   ],
                 ),
