@@ -5,6 +5,7 @@ import 'package:debt_payment_tracker_app/models/general_ledger.dart';
 import 'package:debt_payment_tracker_app/models/transaction.dart';
 import 'package:debt_payment_tracker_app/screens/add_borrower.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final GeneralLedger generalLedger;
@@ -20,6 +21,10 @@ class _NewTransactionState extends State<NewTransaction> {
   var amount = TextEditingController();
   BorrowerAccount? borrowerAccount;
   double runValue = 0;
+  NumberFormat numberFormat = NumberFormat.currency(
+    locale: 'en_PH',
+    symbol: '₱',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +86,11 @@ class _NewTransactionState extends State<NewTransaction> {
                             ),
 
                             Text(
-                              (borrowerAccount!.getBorrowerBalance())
-                                  .toStringAsFixed(2),
+                              numberFormat.format(
+                                (borrowerAccount!
+                                    .getBorrowerBalance()
+                                    .toStringAsFixed(2)),
+                              ),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 80,
@@ -99,7 +107,7 @@ class _NewTransactionState extends State<NewTransaction> {
                               ),
                             ),
                             Text(
-                              runValue.toStringAsFixed(2),
+                              numberFormat.format(runValue.toStringAsFixed(2)),
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 80,
