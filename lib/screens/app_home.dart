@@ -25,7 +25,7 @@ class _AppHomeState extends State<AppHome> {
   final phCurrency = NumberFormat.currency(locale: 'en_PH', symbol: '₱');
   @override
   Widget build(BuildContext context) {
-    final allBorrowers = widget.generalLedger.allBorrowers;
+    // final allBorrowers = widget.generalLedger.allBorrowers;
     final allTransactions = widget.generalLedger.allTransactions;
     return Scaffold(
       appBar: AppBar(title: Text('Money Lending Tracker')),
